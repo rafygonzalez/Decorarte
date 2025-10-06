@@ -58,24 +58,32 @@ import {
   ShopifyUpdateCartOperation
 } from './types';
 
-const domain = process.env.SHOPIFY_STORE_DOMAIN
-  ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
-  : '';
+// Lazy getters para evitar errores en build time
+const getDomain = () => {
+  const domain = process.env.SHOPIFY_STORE_DOMAIN
+    ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
+    : '';
+  
+  if (!domain) {
+    throw new Error(
+      'SHOPIFY_STORE_DOMAIN environment variable is not set. Please configure it in your environment (e.g., your-store.myshopify.com)'
+    );
+  }
+  
+  return domain;
+};
 
-if (!domain) {
-  throw new Error(
-    'SHOPIFY_STORE_DOMAIN environment variable is not set. Please configure it in your environment (e.g., your-store.myshopify.com)'
-  );
-}
-
-if (!process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN) {
-  throw new Error(
-    'SHOPIFY_STOREFRONT_ACCESS_TOKEN environment variable is not set. Please configure it in your environment.'
-  );
-}
-
-const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
-const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+const getAccessToken = () => {
+  const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  
+  if (!token) {
+    throw new Error(
+      'SHOPIFY_STOREFRONT_ACCESS_TOKEN environment variable is not set. Please configure it in your environment.'
+    );
+  }
+  
+  return token;
+};
 
 type ExtractVariables<T> = T extends { variables: object }
   ? T['variables']
@@ -91,6 +99,10 @@ export async function shopifyFetch<T>({
   variables?: ExtractVariables<T>;
 }): Promise<{ status: number; body: T } | never> {
   try {
+    const domain = getDomain();
+    const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
+    const key = getAccessToken();
+    
     const result = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -388,6 +400,8 @@ export async function getMenu(handle: string): Promise<Menu[]> {
     }
   });
 
+  const domain = getDomain();
+  
   return (
     res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
       title: item.title,
