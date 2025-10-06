@@ -7,10 +7,16 @@ frontend:
         - npm install -g pnpm@latest
         - echo "Installing dependencies..."
         - pnpm install --frozen-lockfile
+        - echo "Environment check..."
+        - echo "SHOPIFY_STORE_DOMAIN is set:$([ -n \"$SHOPIFY_STORE_DOMAIN\" ] && echo 'YES' || echo 'NO')"
     build:
       commands:
         - echo "Building Next.js application..."
+        - echo "SHOPIFY_STORE_DOMAIN=$SHOPIFY_STORE_DOMAIN"
         - pnpm run build
+  environment:
+    variables:
+      NODE_ENV: production
   artifacts:
     baseDirectory: .next
     files:

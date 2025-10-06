@@ -1,4 +1,12 @@
 export default {
+  output: 'standalone',
+  env: {
+    SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
+    SHOPIFY_STOREFRONT_ACCESS_TOKEN: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+    SHOPIFY_REVALIDATION_SECRET: process.env.SHOPIFY_REVALIDATION_SECRET,
+    COMPANY_NAME: process.env.COMPANY_NAME,
+    SITE_NAME: process.env.SITE_NAME
+  },
   experimental: {
     ppr: true,
     inlineCss: true,
