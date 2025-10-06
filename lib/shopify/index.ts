@@ -6,9 +6,9 @@ import {
 import { isShopifyError } from 'lib/type-guards';
 import { ensureStartsWith } from 'lib/utils';
 import {
-  revalidateTag,
+  unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
-  unstable_cacheLife as cacheLife
+  revalidateTag
 } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
@@ -61,8 +61,21 @@ import {
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
   : '';
+
+if (!domain) {
+  throw new Error(
+    'SHOPIFY_STORE_DOMAIN environment variable is not set. Please configure it in your environment (e.g., your-store.myshopify.com)'
+  );
+}
+
+if (!process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN) {
+  throw new Error(
+    'SHOPIFY_STOREFRONT_ACCESS_TOKEN environment variable is not set. Please configure it in your environment.'
+  );
+}
+
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
-const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
+const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
 type ExtractVariables<T> = T extends { variables: object }
   ? T['variables']
