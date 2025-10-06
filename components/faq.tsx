@@ -160,7 +160,7 @@ const faqs: FAQCategory[] = [
 function FAQCategory({ title, items }: FAQCategory) {
   return (
     <section className="mb-8">
-      <h2 className="mb-4 text-2xl font-bold text-neutral-900 dark:text-neutral-100">{title}</h2>
+      <h2 className="mb-4 text-2xl font-bold text-[var(--color-primary)]">{title}</h2>
       <div className="space-y-2">
         {items.map((faq) => (
           <Disclosure key={faq.question}>
@@ -169,7 +169,7 @@ function FAQCategory({ title, items }: FAQCategory) {
                 <Disclosure.Button className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-neutral-900 hover:bg-neutral-50 dark:text-neutral-100 dark:hover:bg-neutral-800">
                   <span>{faq.question}</span>
                   <ChevronUpIcon
-                    className={clsx('h-5 w-5 transform transition-transform', open ? 'rotate-180' : '')}
+                    className={clsx('h-5 w-5 transform transition-transform text-[var(--color-primary)]', open ? 'rotate-180' : '')}
                   />
                 </Disclosure.Button>
                 <Transition
@@ -196,7 +196,7 @@ function FAQCategory({ title, items }: FAQCategory) {
 export default function FAQ() {
   return (
     <div className="mx-auto my-16 max-w-4xl px-4">
-      <h1 className="mb-6 text-3xl font-extrabold text-center text-neutral-900 dark:text-neutral-100">
+      <h1 className="mb-6 text-3xl font-extrabold text-center text-[var(--color-primary)]">
         Preguntas Frecuentes
       </h1>
       {faqs.map((cat) => (

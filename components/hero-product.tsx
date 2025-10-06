@@ -29,7 +29,7 @@ export default async function HeroProduct() {
 
       {/* Text */}
       <div className="order-2 w-full space-y-6 text-center md:order-1 md:max-w-xl md:text-left">
-        <h1 className="text-3xl font-extrabold leading-tight text-neutral-900 dark:text-white md:text-4xl lg:text-5xl">
+        <h1 className="text-3xl font-extrabold leading-tight text-[var(--color-primary)] md:text-4xl lg:text-5xl">
           El pegamento original para decorar sin límites
         </h1>
         <p className="text-base leading-relaxed text-neutral-700 dark:text-neutral-300 md:text-lg">
