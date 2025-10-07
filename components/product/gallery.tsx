@@ -4,6 +4,8 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { GridTileImage } from 'components/grid/tile';
 import { useProduct, useUpdateURL } from 'components/product/product-context';
 import Image from 'next/image';
+import { useState } from 'react';
+import Skeleton from '../skeleton';
 
 export function Gallery({ images }: { images: { src: string; altText: string }[] }) {
   const { state, updateImage } = useProduct();
@@ -16,9 +18,12 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
   const buttonClassName =
     'h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center';
 
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <form>
       <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden bg-gradient-to-br from-secondary via-white to-secondary dark:bg-gradient-to-br dark:from-primary/20 dark:via-black dark:to-primary/20 rounded-lg">
+        {!loaded && <Skeleton className="absolute inset-0" />}
         {images[imageIndex] && (
           <Image
             className="h-full w-full object-contain"
@@ -27,6 +32,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
             alt={images[imageIndex]?.altText as string}
             src={images[imageIndex]?.src as string}
             priority={true}
+            onLoadingComplete={() => setLoaded(true)}
           />
         )}
 
