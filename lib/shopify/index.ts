@@ -60,18 +60,8 @@ import {
 
 // Lazy getters para evitar errores en build time
 const getDomain = () => {
-  const rawDomain = process.env.SHOPIFY_STORE_DOMAIN;
-  
-  // Debug logging
-  console.log('[Shopify Config] Environment check:', {
-    hasRawDomain: !!rawDomain,
-    rawDomainValue: rawDomain ? `${rawDomain.substring(0, 10)}...` : 'undefined',
-    nodeEnv: process.env.NODE_ENV,
-    allEnvKeys: Object.keys(process.env).filter(k => k.includes('SHOPIFY'))
-  });
-  
-  const domain = rawDomain
-    ? ensureStartsWith(rawDomain, 'https://')
+  const domain = process.env.SHOPIFY_STORE_DOMAIN
+    ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
     : '';
   
   if (!domain) {
