@@ -9,7 +9,7 @@ export async function ProductsGrid() {
 
   return (
     <section className="mx-auto max-w-6xl space-y-6 px-4">
-      <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <Grid className="grid-cols-2 sm:grid-cols-2 lg:grid-cols-3">
         <ProductGridItems products={products} />
       </Grid>
     </section>
