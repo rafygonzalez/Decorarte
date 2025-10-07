@@ -14,11 +14,6 @@ frontend:
   environment:
     variables:
       NODE_ENV: production
-      SITE_NAME: $SITE_NAME
-      COMPANY_NAME: $COMPANY_NAME
-      SHOPIFY_STORE_DOMAIN: $SHOPIFY_STORE_DOMAIN
-      SHOPIFY_STOREFRONT_ACCESS_TOKEN: $SHOPIFY_STOREFRONT_ACCESS_TOKEN
-      SHOPIFY_REVALIDATION_SECRET: $SHOPIFY_REVALIDATION_SECRET
   artifacts:
     baseDirectory: .next
     files:

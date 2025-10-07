@@ -1,4 +1,5 @@
 import Grid from 'components/grid';
+import Skeleton from 'components/skeleton';
 
 export default function Loading() {
   return (
@@ -9,7 +10,9 @@ export default function Loading() {
           .fill(0)
           .map((_, index) => {
             return (
-              <Grid.Item key={index} className="animate-pulse bg-neutral-100 dark:bg-neutral-800" />
+              <Grid.Item key={index}>
+                <Skeleton square className="w-full h-full" />
+              </Grid.Item>
             );
           })}
       </Grid>
