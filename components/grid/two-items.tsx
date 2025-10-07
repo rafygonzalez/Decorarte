@@ -31,7 +31,7 @@ export async function TwoItemGrid() {
     collection: 'hidden-homepage-featured-items'
   });
 
-  const items = homepageItems.slice(1, 3);
+  const items = homepageItems.slice(0, 2);
   if (items.length < 2) return null;
 
   return (
