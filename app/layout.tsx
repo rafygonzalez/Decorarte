@@ -9,19 +9,21 @@ import { Toaster } from 'sonner';
 import './globals.css';
 import './theme.css';
 
-const { SITE_NAME } = process.env;
+export async function generateMetadata() {
+  const siteName = process.env.SITE_NAME || '';
 
-export const metadata = {
-  metadataBase: new URL(baseUrl),
-  title: {
-    default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`
-  },
-  robots: {
-    follow: true,
-    index: true
-  }
-};
+  return {
+    metadataBase: new URL(baseUrl),
+    title: {
+      default: siteName,
+      template: `%s | ${siteName}`
+    },
+    robots: {
+      follow: true,
+      index: true
+    }
+  } as const;
+}
 
 export default async function RootLayout({
   children
